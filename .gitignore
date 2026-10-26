@@ -1,0 +1,42 @@
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+mcpo/config.json
+mcpo/owui.env
+
+# Renders / generated
+mcpo/config.rendered.json
+
+# Local state
+output/
+.venv/
+*.sqlite
+*.sqlite-journal
+logs/
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Runtime / temp
+*.log
+*.err.log
+*.csv
+!examples/*.csv
+token.json
+*token*.json
+google-oauth*.json
+credentials.json
+gcp-oauth.keys.json
+*service-account*.json
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+scripts/cloudflared.exe
+scripts/*.cooldown
+scripts/*.log.err

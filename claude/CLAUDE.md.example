@@ -1,0 +1,48 @@
+# CLAUDE.md
+
+Global instructions Claude Code reads at the start of every session. The
+installer copies this to `~/.claude/CLAUDE.md` only if you don't have one yet.
+Replace the bracketed parts and delete what doesn't apply.
+
+## Context
+
+This is the working folder for **[Your Company]**, a [what you do] business in
+[your region]. [Your name] handles sales and the business side.
+The main focus is [lead generation / sales automation / proposals / ...].
+
+## Key project folders
+
+- `[path to this repo]`: local AI stack (n8n, Ollama, Open WebUI, Postgres, Redis) and `scripts/`
+- `[path]`: [your website, CRM exports, etc.]
+
+## Tools connected
+
+- **MCP servers:** `pipeline-desktop` (http://localhost:7788/mcp) once `scripts/pipeline_mcp_server.py` is running
+- **Plugins:** chrome-devtools-mcp (browser automation), code-review
+- **GSD:** planning and execution workflows (`/gsd-help`)
+
+## Local services (start with `docker compose up -d` in the repo)
+
+| Service | URL |
+|---|---|
+| Open WebUI | http://localhost:3000 |
+| n8n | http://localhost:5678 |
+| Ollama | http://localhost:11434 |
+| Claude relay | http://localhost:7777/v1 |
+| Postgres | localhost:5432 |
+| Redis | localhost:6379 |
+
+## n8n webhooks
+
+POST to `http://localhost:5678/webhook/<path>` with header
+`X-Webhook-Token: <N8N_WEBHOOK_SECRET from .env>`.
+
+| Path | Purpose |
+|---|---|
+| `leads` | Cold outreach email generation |
+
+## How I like to work
+
+- Answer in plain business terms; explain technical steps briefly.
+- Ask before committing, pushing, deploying or sending anything external.
+- Never put API keys in files other than `.env`.

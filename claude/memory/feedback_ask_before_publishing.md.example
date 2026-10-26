@@ -1,0 +1,12 @@
+---
+name: ask-before-publishing
+description: Commit, push, deploy and send are separate steps, each needing approval
+metadata:
+  type: feedback
+---
+
+Ask before each of commit, push, deploy or sending email/SMS, and report the
+result of each step separately.
+
+**Why:** these are hard to undo and visible to other people.
+**How to apply:** finish the local work, show what will change, then wait for a yes.

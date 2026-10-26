@@ -1,0 +1,26 @@
+{
+  "title": "Example Region DOD Lead Pipeline",
+  "source": "SAM.gov API (DFARS 252.204-7012 holders, state filter)",
+  "companies": [
+    {"name": "Example Defense Systems Inc", "naics": "541512", "sector": "IT / Cybersecurity", "awards": "$12.0M", "domain": "example.com", "ciso": "(verify on LinkedIn)", "contact_note": "Domain confirmed. Find the IT lead before outreach."},
+    {"name": "Sample Aerospace Components LLC", "naics": "336413", "sector": "Aircraft Parts", "awards": "$4.5M", "domain": "", "ciso": "(owner-operated)", "contact_note": "Small firm. Try the SAM.gov point of contact."},
+    {"name": "Demo Engineering Group", "naics": "541330", "sector": "Defense Engineering", "awards": "$8.2M", "domain": "example.org", "ciso": "(not listed)", "contact_note": "Good mid-size target."}
+  ],
+  "emails": {
+    "Example Defense Systems Inc": {
+      "subject": "CMMC Level 2 readiness for Example Defense Systems",
+      "body": "Hi [Recipient's First Name],\n\nWith your recent DoD awards, CMMC Level 2 is now a condition of keeping that work. I help contractors your size find and close the gaps quickly.\n\nWould a free 30-minute gap review be useful? Book here: https://calendly.com/your-handle\n\nBest regards,\nYour Name\nYour Company"
+    },
+    "Demo Engineering Group": {
+      "subject": "Protecting CUI in your engineering data",
+      "body": "Hi [Recipient's First Name],\n\nEngineering drawings and specs are usually where CUI hides. I can show you where you stand against NIST 800-171 in one short call.\n\nBook a time: https://calendly.com/your-handle\n\nBest regards,\nYour Name\nYour Company"
+    }
+  },
+  "action_items": [
+    "Replace all [Recipient's First Name] placeholders before sending.",
+    "Verify contact names on LinkedIn before using them."
+  ],
+  "notes": [
+    "Contact names returned by web search are not verified. Cross-check before personalizing outreach."
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "name": "Lead Outreach Email",
+  "nodes": [
+    {
+      "id": "wh",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "parameters": {
+        "path": "leads",
+        "responseMode": "responseNode",
+        "httpMethod": "POST"
+      },
+      "webhookId": "leads"
+    },
+    {
+      "id": "c1",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        300
+      ],
+      "parameters": {
+        "jsCode": "try {\n  const item = $input.first().json;\n  const body = item.body || {};\n  // Shared-secret check (X-Webhook-Token header must match N8N_WEBHOOK_SECRET)\n  const SECRET = $env.N8N_WEBHOOK_SECRET || '';\n  if (SECRET && (item.headers || {})['x-webhook-token'] !== SECRET) {\n    return [{json: {result: 'Request rejected: missing or wrong X-Webhook-Token'}}];\n  }\n  const BUSINESS = $env.BUSINESS_NAME || 'Your Company';\n  const REGION = $env.BUSINESS_REGION || 'your region';\n  const BOOKING = $env.CALENDLY_URL || '';\n  const resp = await this.helpers.httpRequest({\n    method: 'POST',\n    url: 'http://ollama:11434/v1/chat/completions',\n    headers: {'Content-Type': 'application/json'},\n    body: JSON.stringify({\n      model: 'qwen2.5:14b',\n      max_tokens: 1500,\n      messages: [\n        {role: 'system', content: 'You are a B2B sales email writer for ' + BUSINESS + ', a CMMC consulting firm in ' + REGION + '. Write a concise, professional cold outreach email to a defense contractor who needs CMMC Level 2 help. Keep it under 200 words. Lead with a specific pain point related to their industry. End with a soft CTA offering a free 30-minute gap assessment with a direct booking link: ' + BOOKING + ' Sound human, not like marketing copy. Output ONLY the email (subject line + body). No word counts, no meta-commentary.'},\n        {role: 'user', content: `Write a cold outreach email to ${(body.company && body.company !== \"Unknown\") ? body.company : \"this defense contractor\"} (NAICS: ${body.naics || '541512'}). Context: ${body.notes || 'No additional context.'}`}\n      ]\n    }),\n    timeout: 60000\n  });\n  const data = typeof resp === 'string' ? JSON.parse(resp) : resp;\n  const text = data?.choices?.[0]?.message?.content || JSON.stringify(data);\n  return [{json: {result: text}}];\n} catch(e) {\n  return [{json: {result: 'Error: ' + e.message}}];\n}",
+        "mode": "runOnceForAllItems"
+      }
+    },
+    {
+      "id": "r1",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        800,
+        300
+      ],
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.result }}"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

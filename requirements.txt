@@ -1,0 +1,12 @@
+requests
+urllib3
+certifi
+httpx
+pydantic
+fastapi
+uvicorn
+fastmcp
+python-docx
+pypdf
+google-auth-oauthlib
+google-api-python-client
